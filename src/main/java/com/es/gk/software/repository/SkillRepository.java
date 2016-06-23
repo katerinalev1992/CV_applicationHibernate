@@ -25,6 +25,11 @@ public class SkillRepository {
     @Inject
     private Logger logger;
 
+    public Skill getById(long id){
+        logger.info("Get skill by id: " + id);
+        return entityManager.find(Skill.class, id);
+    }
+
     public List<Skill> getBySkill(String skill){
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Skill> criteriaQuery = criteriaBuilder.createQuery(Skill.class);
