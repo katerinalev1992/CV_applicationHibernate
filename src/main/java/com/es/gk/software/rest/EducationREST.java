@@ -1,8 +1,8 @@
 package com.es.gk.software.rest;
 
-import com.es.gk.software.model.Person;
-import com.es.gk.software.registrator.PersonRegistrator;
-import com.es.gk.software.repository.PersonRepository;
+import com.es.gk.software.model.Education;
+import com.es.gk.software.registrator.EducationRegistrator;
+import com.es.gk.software.repository.EducationRepository;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -12,55 +12,73 @@ import javax.validation.Validator;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.sql.Date;
 import java.util.*;
 import java.util.logging.Logger;
 
 /**
- * Created by klevytska on 6/7/2016.
+ * Created by klevytska on 6/23/2016.
  */
-@Path("/person")
+
+@Path("/education")
 @RequestScoped
-public class PersonREST {
+public class EducationREST {
     @Inject
     private Logger logger;
+
     @Inject
-    private PersonRepository personRepository;
+    private EducationRegistrator educationRegistrator;
+
     @Inject
-    private PersonRegistrator personRegistrator;
+    private EducationRepository educationRepository;
+
     @Inject
     private Validator validator;
 
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Person getPersonById(@PathParam("id") long id) {
-        return personRepository.getById(id);
+    public Education getEducationById(@PathParam("id") long id) {
+        return educationRepository.getById(id);
     }
 
     @GET
-    @Path("/fisrtName/{firstName}")
+    @Path("/country/{country}")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Person> getPersonByName(@PathParam("firstName") String firstName){
-        return personRepository.getByName(firstName);
+    public List<Education> getEducationByName(@PathParam("country") String country){
+        return educationRepository.getByCountry(country);
     }
 
     @GET
-    @Path("/fisrtName/{firstName}/lastName/{lastName}")
+    @Path("/speciality/{speciality}")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Person> getPersonByName(@PathParam("firstName") String firstName, @PathParam("lastName") String lastName){
+    public List<Education> getEducationBySpeciality(@PathParam("speciality") String speciality){
+        return educationRepository.getBySpeciality(speciality);
+    }
 
-        return personRepository.getByFirstNameAndLastName(firstName, lastName);
+    @GET
+    @Path("/place/{place}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Education> getEducationByPlace(@PathParam("place") String place){
+        return educationRepository.getByPlace(place);
+    }
+
+    @GET
+    @Path("/dateStart/{dateStart}/dateEnd/{dateEnd}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Education> getEducationByStartDate(@PathParam("dateStart") Date dateStart, @PathParam("dateEnd") Date dateEnd){
+        return educationRepository.getByPeriod(dateStart, dateEnd);
     }
 
     @PUT
     @Path("/")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response updateOrder(Person element) {
-        logger.info("PUT save order " + element);
+    public Response updateEducation(Education element) {
+        logger.info("PUT save education " + element);
         Response.ResponseBuilder builder = null;
         try {
-            personRegistrator.update(element);
+            educationRegistrator.update(element);
             Map<String, String> responseObj = new HashMap<>();
             responseObj.put("status", "ok");
             builder = Response.status(Response.Status.OK).entity(responseObj);
@@ -79,12 +97,12 @@ public class PersonREST {
     @Path("/")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response create(Person element) {
+    public Response create(Education element) {
         logger.info("POST save menu " + element);
         Response.ResponseBuilder builder = null;
         try {
             validate(element);
-            personRegistrator.create(element);
+            educationRegistrator.create(element);
             builder = Response.ok();
         } catch (ConstraintViolationException exception) {
             builder = createViolationResponse(exception.getConstraintViolations());
@@ -98,9 +116,9 @@ public class PersonREST {
         return builder.build();
     }
 
-    private void validate(Person element) throws ConstraintViolationException {
+    private void validate(Education element) throws ConstraintViolationException {
         logger.info("Validating menu: " + element);
-        Set<ConstraintViolation<Person>> violations = validator.validate(element);
+        Set<ConstraintViolation<Education>> violations = validator.validate(element);
         if (!violations.isEmpty()) {
             throw new ConstraintViolationException(new HashSet<ConstraintViolation<?>>(violations));
         }
