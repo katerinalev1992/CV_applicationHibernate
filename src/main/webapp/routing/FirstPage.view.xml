@@ -1,0 +1,38 @@
+<mvc:View
+	controllerName="routing.FirstPage"
+	xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:l="sap.ui.layout"
+	xmlns:f="sap.ui.layout.form">
+	<Page title="{i18n>homePageTitle}" class="sapUiResponsiveContentPadding">
+		<content>
+			<VBox class="sapUiSmallMargin" alignItems="Center">
+				<f:SimpleForm id="SimpleFormLogIn"				
+					editable="false"
+					layout="ResponsiveGridLayout"
+					title="REST Quest">
+					<f:content>
+						<Label text="Team" />
+							 <Input
+            					id="UserName"
+            					width="100%"
+          						valueLiveUpdate="true"
+          						placeholder="User name..."
+          						value="{/username}"
+           	 					/>
+
+						<VBox alignItems="Center">
+							<Button
+         						icon="sap-icon://world"
+            					text="Login"
+           						press="onLoginButton"
+            					class="myAppDemoWT myCustomButton"
+            					/> 
+                        </VBox>
+
+					</f:content>
+				</f:SimpleForm>
+			</VBox>
+		</content>
+	</Page>
+</mvc:View>

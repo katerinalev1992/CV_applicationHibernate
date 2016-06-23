@@ -1,0 +1,30 @@
+<mvc:View
+        controllerName="routing.SecondPage"
+        xmlns="sap.m"
+        xmlns:mvc="sap.ui.core.mvc"
+        xmlns:l="sap.ui.layout"
+        xmlns:f="sap.ui.layout.form">
+    <Page title="{i18n>homePageTitle}" class="sapUiResponsiveContentPadding">
+        <content>
+            <VBox class="sapUiSmallMargin" alignItems="Center">
+                <Label text="Number Of Puzzles"/>
+                <Input
+                        id="NumberOfPuzzles"
+                        width="100%"
+                        valueLiveUpdate="true"
+                        placeholder="User name..."
+                        value="{/numberOfPuzzle}"
+                />
+                <Label id="Complexity" text="Complexity"/>
+                <Input
+                        id="ComplexityInput"
+                        width="100%"
+                        valueLiveUpdate="true"
+                        value="{/complexity}"
+                        placeholder="Complexity..."
+                />
+                <Button id="next" text="Next" press="onNextPress"/>
+            </VBox>
+        </content>
+    </Page>
+</mvc:View>

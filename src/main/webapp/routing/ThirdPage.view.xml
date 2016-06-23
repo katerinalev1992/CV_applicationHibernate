@@ -1,0 +1,23 @@
+<mvc:View
+        controllerName="routing.ThirdPage"
+        xmlns="sap.m"
+        xmlns:mvc="sap.ui.core.mvc"
+        xmlns:l="sap.ui.layout"
+        xmlns:f="sap.ui.layout.form">
+    <Page class="sapUiResponsiveContentPadding">
+        <content>
+            <VBox>
+                <Label text="Task title"/>
+                <TextArea id="Title"></TextArea>
+                <Label text="Task description"/>
+                <TextArea id="Description" width="400px" height="400px"></TextArea>
+                <HBox>
+                    <Button text="Game over" press="onPressGameOver"/>
+                    <Button text="Get tooltip" press="onGetTooltip"/>
+                    <Button text="Enter solution" press="onEnterSolution"/>
+                </HBox>
+            </VBox>
+
+        </content>
+    </Page>
+</mvc:View>
